@@ -2,5 +2,8 @@
 
 Stunning particles animation between graph nodes.
 
-Run it via VS code and Local server plugin - it\'s required due to using import/export ES feature
+To run it:
+ - npm i
+ - npm run dev
+ - open in browser localhost:1234
 
