@@ -1,0 +1,30 @@
+{
+  "name": "graph-anim",
+  "version": "1.0.0",
+  "description": "Particles animation between graph nodes",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html",
+    "watch": "parcel watch index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nadiein/graph-particles-animation.git"
+  },
+  "keywords": [
+    "animation",
+    "canvas",
+    "javascript"
+  ],
+  "author": "nadiein",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/nadiein/graph-particles-animation/issues"
+  },
+  "homepage": "https://github.com/nadiein/graph-particles-animation#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}
