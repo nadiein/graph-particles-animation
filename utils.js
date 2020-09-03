@@ -4,7 +4,7 @@ export default class Entity {
     }
 }
 
-export default class Position {
+export default class CoordinatesVo {
 
     constructor(x, y) {
         this.x = x;
@@ -14,8 +14,8 @@ export default class Position {
 
 export default class Config {
 
-    constructor(position, width, height, color) {
-        this.position = position;
+    constructor(coords, width, height, color) {
+        this.coords = coords;
         this.width = width;
         this.height = height;
         this.color = color
