@@ -1,10 +1,10 @@
-export default class Entity {
+export class Entity {
     constructor(id) {
         this.id = id;
     }
 }
 
-export default class CoordinatesVo {
+export class CoordinatesVo {
 
     constructor(x, y) {
         this.x = x;
@@ -12,7 +12,7 @@ export default class CoordinatesVo {
     }
 }
 
-export default class Config {
+export class Config {
 
     constructor(coords, width, height, color) {
         this.coords = coords;
