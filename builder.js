@@ -7,6 +7,7 @@ export default class Builder {
 
     constructor() {
         this.node = null;
+        // canvas set up
         this.canvas = null;
         this.ctx = null;
         this.x = null;
@@ -14,6 +15,8 @@ export default class Builder {
         this.width = null;
         this.height = null;
         this.color = '';
+        // graph
+        this.graphNodes = [];
     }
 
     static setConfig(config) {
@@ -42,9 +45,16 @@ export default class Builder {
         return this;
     }
 
-    drawGraph() {
+    drawGraph(quantity) {
         // TODO: draw graph
-        let value = Utils.getRandomNumber(8, 10);
+        
+        for (let i = 0; i < quantity; i++) {
+            let value = Utils.getRandomNumber(16, 2);
+            let coords = new CoordinatesVo(value[0], value[1]);
+            let config = new Config(coords);
+            let graphNode = new GraphNode(i, config, []);
+            this.graphNodes.push(graphNode);
+        }
         return this;
     }
 
@@ -67,6 +77,16 @@ export default class Builder {
         this.canvas.setAttribute('height', this.height);
         this.ctx.fillStyle = this.color;
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        // initialize graph nodes
+        for (let node in this.graphNodes) {
+            this.ctx.beginPath();
+            this.ctx.arc(Math.ceil(this.graphNodes[node].x/100), Math.ceil(this.graphNodes[node].y/100), 50/5, 0, 2 * Math.PI);
+            this.ctx.strokeStyle = this.graphNodes[node].color;
+            this.ctx.stroke();
+        }
+
+        // initialize canvas
         this.node.appendChild(this.canvas);
     }
 }

@@ -58,7 +58,9 @@ import { Entity, CoordinatesVo, Config } from './utils'
 
     const app = document.querySelector('.app');
 
-    Builder.setConfig(config).drawStage(app).drawGraph().build();
+    const graphNodesSeed = 20;
+
+    Builder.setConfig(config).drawStage(app).drawGraph(graphNodesSeed).build();
 
 
 }());

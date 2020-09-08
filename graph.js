@@ -9,6 +9,7 @@ export default class GraphNode {
         this.y = config.coords.y;
         this.width = config.width;
         this.height = config.height;
+        this.color = config.color;
         this.childrens = childrens;
     }
 }

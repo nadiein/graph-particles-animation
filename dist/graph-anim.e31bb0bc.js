@@ -148,7 +148,11 @@ var CoordinatesVo = function CoordinatesVo(x, y) {
 
 exports.CoordinatesVo = CoordinatesVo;
 
-var Config = function Config(coords, width, height, color) {
+var Config = function Config(coords) {
+  var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 50;
+  var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 50;
+  var color = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '#4f61a1';
+
   _classCallCheck(this, Config);
 
   this.coords = coords;
@@ -173,6 +177,9 @@ var Utils = /*#__PURE__*/function () {
       value = window.crypto.getRandomValues(array);
       return value;
     }
+  }, {
+    key: "isIntersected",
+    value: function isIntersected(a, b) {}
   }]);
 
   return Utils;
@@ -222,6 +229,7 @@ var GraphNode = function GraphNode(id, config, childrens) {
   this.y = config.coords.y;
   this.width = config.width;
   this.height = config.height;
+  this.color = config.color;
   this.childrens = childrens;
 };
 
@@ -258,14 +266,17 @@ var Builder = /*#__PURE__*/function () {
 
     _initStage.add(this);
 
-    this.node = null;
+    this.node = null; // canvas set up
+
     this.canvas = null;
     this.ctx = null;
     this.x = null;
     this.y = null;
     this.width = null;
     this.height = null;
-    this.color = '';
+    this.color = ''; // graph
+
+    this.graphNodes = [];
   }
 
   _createClass(Builder, [{
@@ -282,9 +293,16 @@ var Builder = /*#__PURE__*/function () {
     }
   }, {
     key: "drawGraph",
-    value: function drawGraph() {
+    value: function drawGraph(quantity) {
       // TODO: draw graph
-      var value = _utils.Utils.getRandomNumber(8, 10);
+      for (var i = 0; i < quantity; i++) {
+        var value = _utils.Utils.getRandomNumber(16, 2);
+
+        var coords = new _utils.CoordinatesVo(value[0], value[1]);
+        var config = new _utils.Config(coords);
+        var graphNode = new _graph.default(i, config, []);
+        this.graphNodes.push(graphNode);
+      }
 
       return this;
     }
@@ -307,7 +325,16 @@ var Builder = /*#__PURE__*/function () {
       this.canvas.setAttribute('width', this.width);
       this.canvas.setAttribute('height', this.height);
       this.ctx.fillStyle = this.color;
-      this.ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.ctx.fillRect(this.x, this.y, this.width, this.height); // initialize graph nodes
+
+      for (var node in this.graphNodes) {
+        this.ctx.beginPath();
+        this.ctx.arc(Math.ceil(this.graphNodes[node].x / 100), Math.ceil(this.graphNodes[node].y / 100), 50 / 5, 0, 2 * Math.PI);
+        this.ctx.strokeStyle = this.graphNodes[node].color;
+        this.ctx.stroke();
+      } // initialize canvas
+
+
       this.node.appendChild(this.canvas);
     }
   }], [{
@@ -395,8 +422,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var coords = new _utils.CoordinatesVo(canvasX, canvasY);
   var config = new _utils.Config(coords, canvasW, canvasH, canvasColor);
   var app = document.querySelector('.app');
+  var graphNodesSeed = 20;
 
-  _builder.default.setConfig(config).drawStage(app).drawGraph().build();
+  _builder.default.setConfig(config).drawStage(app).drawGraph(graphNodesSeed).build();
 })();
 },{"./builder.js":"builder.js","./utils":"utils.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
