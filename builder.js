@@ -1,6 +1,6 @@
 import Particle from './particle';
 import GraphNode from './graph';
-import { Entity, CoordinatesVo, Config } from './utils'
+import { Entity, CoordinatesVo, Config, Utils } from './utils'
 
 
 export default class Builder {
@@ -44,6 +44,8 @@ export default class Builder {
 
     drawGraph() {
         // TODO: draw graph
+        let value = Utils.getRandomNumber(8, 10);
+        return this;
     }
 
     createGraphNode() {

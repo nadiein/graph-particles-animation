@@ -123,7 +123,11 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Config = exports.CoordinatesVo = exports.Entity = void 0;
+exports.Utils = exports.Config = exports.CoordinatesVo = exports.Entity = void 0;
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -154,6 +158,27 @@ var Config = function Config(coords, width, height, color) {
 };
 
 exports.Config = Config;
+
+var Utils = /*#__PURE__*/function () {
+  function Utils() {
+    _classCallCheck(this, Utils);
+  }
+
+  _createClass(Utils, null, [{
+    key: "getRandomNumber",
+    value: function getRandomNumber(arrayType, size) {
+      var value = null;
+      var uIntArray = window["Uint".concat(arrayType, "Array")];
+      var array = new uIntArray(size);
+      value = window.crypto.getRandomValues(array);
+      return value;
+    }
+  }]);
+
+  return Utils;
+}();
+
+exports.Utils = Utils;
 },{}],"particle.js":[function(require,module,exports) {
 "use strict";
 
@@ -257,7 +282,11 @@ var Builder = /*#__PURE__*/function () {
     }
   }, {
     key: "drawGraph",
-    value: function drawGraph() {// TODO: draw graph
+    value: function drawGraph() {
+      // TODO: draw graph
+      var value = _utils.Utils.getRandomNumber(8, 10);
+
+      return this;
     }
   }, {
     key: "createGraphNode",
@@ -333,7 +362,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var luxMaxValue = 999;
     var lux = getAmbientSensorValue();
 
-    if (lux && lux > luxMaxValue || hours > midTwilightTime) {
+    if (lux && lux > luxMaxValue || hours >= midTwilightTime) {
       isDark = true;
     }
 
@@ -367,7 +396,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var config = new _utils.Config(coords, canvasW, canvasH, canvasColor);
   var app = document.querySelector('.app');
 
-  _builder.default.setConfig(config).drawStage(app).build();
+  _builder.default.setConfig(config).drawStage(app).drawGraph().build();
 })();
 },{"./builder.js":"builder.js","./utils":"utils.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -397,7 +426,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49508" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50918" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -21,3 +21,14 @@ export class Config {
         this.color = color
     }
 }
+
+export class Utils {
+
+    static getRandomNumber(arrayType, size) {
+        let value = null;
+        let uIntArray = window[`Uint${arrayType}Array`];
+        let array = new uIntArray(size)
+        value = window.crypto.getRandomValues(array);
+        return value;
+    }
+}
