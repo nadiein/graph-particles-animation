@@ -25,7 +25,7 @@ import { Entity, CoordinatesVo, Config } from './utils'
         let lux = getAmbientSensorValue();
         
         if ( lux && lux > luxMaxValue ||
-            hours > midTwilightTime ) {
+            hours >= midTwilightTime ) {
             isDark = true;
         }
 
@@ -58,7 +58,8 @@ import { Entity, CoordinatesVo, Config } from './utils'
 
     const app = document.querySelector('.app');
 
-    Builder.setConfig(config).drawStage(app).build();
+    Builder.setConfig(config).drawStage(app).drawGraph().build();
+
 
 }());
  
