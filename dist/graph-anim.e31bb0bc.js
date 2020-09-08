@@ -223,11 +223,19 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+var _initStage = new WeakSet();
+
 var Builder = /*#__PURE__*/function () {
   function Builder() {
     _classCallCheck(this, Builder);
 
+    _initStage.add(this);
+
     this.node = null;
+    this.canvas = null;
+    this.ctx = null;
     this.x = null;
     this.y = null;
     this.width = null;
@@ -236,15 +244,16 @@ var Builder = /*#__PURE__*/function () {
   }
 
   _createClass(Builder, [{
+    key: "getStage",
+    value: function getStage() {
+      return _classPrivateMethodGet(this, _initStage, _initStage2).call(this);
+    }
+  }, {
     key: "drawStage",
     value: function drawStage(node) {
       // TODO: draw canvas stage
       this.node = node;
-      var canvas = document.createElement('canvas');
-      var ctx = canvas.getContext('2d');
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-      this.node.appendChild(canvas);
+      return this;
     }
   }, {
     key: "drawGraph",
@@ -265,17 +274,22 @@ var Builder = /*#__PURE__*/function () {
   }, {
     key: "build",
     value: function build() {
-      console.log('builder initialized');
+      this.getStage();
+      this.canvas.setAttribute('width', this.width);
+      this.canvas.setAttribute('height', this.height);
+      this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.node.appendChild(this.canvas);
     }
   }], [{
     key: "setConfig",
     value: function setConfig(config) {
       var builder = new Builder();
-      this.x = config.coords.x;
-      this.y = config.coords.y;
-      this.width = config.width;
-      this.height = config.height;
-      this.color = config.color;
+      builder.x = config.coords.x;
+      builder.y = config.coords.y;
+      builder.width = config.width;
+      builder.height = config.height;
+      builder.color = config.color;
       return builder;
     }
   }]);
@@ -284,6 +298,12 @@ var Builder = /*#__PURE__*/function () {
 }();
 
 exports.default = Builder;
+
+var _initStage2 = function _initStage2() {
+  this.canvas = document.createElement('canvas');
+  this.ctx = this.canvas.getContext('2d');
+  return this;
+};
 },{"./particle":"particle.js","./graph":"graph.js","./utils":"utils.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -377,7 +397,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55303" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49508" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
